@@ -17,6 +17,4 @@ const app = initializeApp(firebaseConfig);
 
 export const firebaseAuth = getAuth(app);
 
-if (environment.NODE_ENV !== 'production') {
-    connectAuthEmulator(firebaseAuth, 'http://localhost:9099');
-}
+

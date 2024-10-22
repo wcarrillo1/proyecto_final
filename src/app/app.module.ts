@@ -9,12 +9,10 @@ import {LoginComponent} from '@modules/login/login.component';
 import {HeaderComponent} from '@modules/main/header/header.component';
 import {FooterComponent} from '@modules/main/footer/footer.component';
 import {MenuSidebarComponent} from '@modules/main/menu-sidebar/menu-sidebar.component';
-import {BlankComponent} from '@pages/blank/blank.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ProfileComponent} from '@pages/profile/profile.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from '@modules/register/register.component';
-import {DashboardComponent} from '@pages/dashboard/dashboard.component';
 import {ToastrModule} from 'ngx-toastr';
 import {MessagesComponent} from '@modules/main/header/messages/messages.component';
 import {NotificationsComponent} from '@modules/main/header/notifications/notifications.component';
@@ -24,28 +22,31 @@ import localeEn from '@angular/common/locales/en';
 import {UserComponent} from '@modules/main/header/user/user.component';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
-import {LanguageComponent} from '@modules/main/header/language/language.component';
 import {MainMenuComponent} from './pages/main-menu/main-menu.component';
 import {SubMenuComponent} from './pages/main-menu/sub-menu/sub-menu.component';
 import {MenuItemComponent} from './components/menu-item/menu-item.component';
-import {ControlSidebarComponent} from './modules/main/control-sidebar/control-sidebar.component';
 import {StoreModule} from '@ngrx/store';
 import {authReducer} from './store/auth/reducer';
 import {uiReducer} from './store/ui/reducer';
 import {ProfabricComponentsModule} from '@profabric/angular-components';
-import {SidebarSearchComponent} from './components/sidebar-search/sidebar-search.component';
 import {NgxGoogleAnalyticsModule} from 'ngx-google-analytics';
 import {environment} from 'environments/environment';
-import {ActivityTabComponent} from './pages/profile/activity-tab/activity-tab.component';
-import {TimelineTabComponent} from './pages/profile/timeline-tab/timeline-tab.component';
 import {SettingsTabComponent} from './pages/profile/settings-tab/settings-tab.component';
-import {PostComponent} from './pages/profile/post/post.component';
 import {InfoBoxComponent} from './components/info-box/info-box.component';
-import {SmallBoxComponent} from './components/small-box/small-box.component';
 import {ContentHeaderComponent} from './components/content-header/content-header.component';
 import {LoadingComponent} from './components/loading/loading.component';
 import {OverlayLoadingComponent} from './components/overlay-loading/overlay-loading.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { TimeTrackingComponent } from '@pages/time-tracking/time-tracking.component';
+import { AddEmployeeComponent } from './pages/employee/add-employee/add-employee.component';
+import { EmployeeFormComponent } from './pages/employee/employee-form/employee-form.component';
+import { EmployeeListComponent } from './pages/employee/employee-list/employee-list.component';
+import { ReportAdminComponent } from '@pages/report-admin/report-admin.component';
+import { DepartmentReportComponent } from './reports/department-report/department-report.component';
+import { GeneralReportComponent } from './reports/general-report/general-report.component';
+import { IndividualReportComponent } from './reports/individual-report/individual-report.component';
+import { OvertimeReportComponent } from './reports/overtime-report/overtime-report.component';
+import { EarlyCheckoutReportComponent } from './reports/early-checkout-report/early-checkout-report.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -57,33 +58,36 @@ registerLocaleData(localeEn, 'en-EN');
         HeaderComponent,
         FooterComponent,
         MenuSidebarComponent,
-        BlankComponent,
         ProfileComponent,
         RegisterComponent,
-        DashboardComponent,
         MessagesComponent,
         NotificationsComponent,
         UserComponent,
         ForgotPasswordComponent,
         RecoverPasswordComponent,
-        LanguageComponent,
         MainMenuComponent,
         SubMenuComponent,
         MenuItemComponent,
-        ControlSidebarComponent,
-        SidebarSearchComponent,
-        ActivityTabComponent,
-        TimelineTabComponent,
         SettingsTabComponent,
-        PostComponent,
         InfoBoxComponent,
-        SmallBoxComponent,
         ContentHeaderComponent,
         LoadingComponent,
-        OverlayLoadingComponent
+        OverlayLoadingComponent,
+        TimeTrackingComponent,
+        AddEmployeeComponent,
+        EmployeeFormComponent,
+        EmployeeFormComponent,
+        EmployeeListComponent,
+        ReportAdminComponent,
+        DepartmentReportComponent,
+        GeneralReportComponent,
+        IndividualReportComponent,
+        OvertimeReportComponent,
+        EarlyCheckoutReportComponent
     ],
     bootstrap: [AppComponent],
     imports: [
+        FormsModule,
         ProfabricComponentsModule,
         CommonModule,
         BrowserModule,

@@ -1,16 +1,23 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {MainComponent} from '@modules/main/main.component';
-import {BlankComponent} from '@pages/blank/blank.component';
 import {LoginComponent} from '@modules/login/login.component';
 import {ProfileComponent} from '@pages/profile/profile.component';
 import {RegisterComponent} from '@modules/register/register.component';
-import {DashboardComponent} from '@pages/dashboard/dashboard.component';
 import {AuthGuard} from '@guards/auth.guard';
 import {NonAuthGuard} from '@guards/non-auth.guard';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
 import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
+import { TimeTrackingComponent } from '@pages/time-tracking/time-tracking.component';
+import { EmployeeListComponent } from '@pages/employee/employee-list/employee-list.component';
+import { ReportAdminComponent } from '@pages/report-admin/report-admin.component';
+import { DepartmentReportComponent } from './reports/department-report/department-report.component';
+import { GeneralReportComponent } from './reports/general-report/general-report.component';
+import { IndividualReportComponent } from './reports/individual-report/individual-report.component';
+import { OvertimeReportComponent } from './reports/overtime-report/overtime-report.component';
+import { EarlyCheckoutReportComponent } from './reports/early-checkout-report/early-checkout-report.component';
+import { AddEmployeeComponent } from '@pages/employee/add-employee/add-employee.component';
 
 const routes: Routes = [
     {
@@ -25,20 +32,38 @@ const routes: Routes = [
             },
             {
                 path: 'blank',
-                component: BlankComponent
+                component: EmployeeListComponent
             },
             {
-                path: 'sub-menu-1',
-                component: SubMenuComponent
+                path: 'reports',
+                component: ReportAdminComponent
             },
             {
                 path: 'sub-menu-2',
-                component: BlankComponent
+                component: EmployeeListComponent
             },
             {
                 path: '',
-                component: DashboardComponent
-            }
+                component: TimeTrackingComponent
+            },
+            { path: 'reports/department', 
+                component: DepartmentReportComponent 
+            },
+            { path: 'reports/general', 
+                component: GeneralReportComponent 
+            },
+            { path: 'reports/individual', 
+                component: IndividualReportComponent 
+            },
+            { path: 'reports/overtime', 
+                component: OvertimeReportComponent 
+            },
+            { path: 'reports/early-checkout', 
+                component: EarlyCheckoutReportComponent 
+            },
+            { path: 'add-employee',
+                component: AddEmployeeComponent
+            },
         ]
     },
     {

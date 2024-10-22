@@ -1,0 +1,32 @@
+<div class="employee-list">
+    <h2>Lista de Empleados</h2>
+    <div class="add-employee">
+      <button (click)="goToAddEmployee()" class="btn add">Agregar Empleado</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Usuario</th>
+          <th>Correo</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of empleados">
+          <td>{{ employee.id }}</td>
+          <td>{{ employee.username }}</td>
+          <td>{{ employee.email }}</td>
+          <td>{{ employee.activo === 1 ? 'Active' : 'Inactive' }}</td>
+          <td class="actions-cell">  
+            <div class="actions">
+            <button (click)="editEmployee(employee.id)" class="btn edit">Edit</button>
+            <!-- <button (click)="marcarTracking(employee.id)" class="btn tracking">Marcar Tracking</button> -->
+          </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

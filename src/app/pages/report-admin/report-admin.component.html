@@ -1,0 +1,36 @@
+<div class="report-list-container">
+    <h2>Reportes de Marcaje</h2>
+    <ul class="report-list">
+      <li class="report-item">
+        <div class="report-title">Marcaje de empleados por departamento</div>
+        <button class="btn-report" (click)="navigateToReport('department')">
+          Ver Reporte
+        </button>
+      </li>
+      <li class="report-item">
+        <div class="report-title">Marcaje de empleados en general</div>
+        <button class="btn-report" (click)="navigateToReport('general')">
+          Ver Reporte
+        </button>
+      </li>
+      <li class="report-item">
+        <div class="report-title">Marcaje de empleado individual</div>
+        <button class="btn-report" (click)="navigateToReport('individual')">
+          Ver Reporte
+        </button>
+      </li>
+      <li class="report-item">
+        <div class="report-title">Empleados que marcaron fuera del horario</div>
+        <button class="btn-report" (click)="navigateToReport('overtime')">
+          Ver Reporte
+        </button>
+      </li>
+      <li class="report-item">
+        <div class="report-title">Empleados que marcaron antes del horario de salida</div>
+        <button class="btn-report" (click)="navigateToReport('early-checkout')">
+          Ver Reporte
+        </button>
+      </li>
+    </ul>
+  </div>
+  

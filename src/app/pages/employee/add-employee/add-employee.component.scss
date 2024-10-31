@@ -1,6 +1,11 @@
+.main-container{
+  display: flex; 
+}
 .add-employee-container {
+    margin-top: 10px;
+    min-width: 500px;
     max-width: 500px;
-    margin: 0 auto;
+    margin-left: 200px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -11,7 +16,22 @@
     text-align: center;
     color: #333;
   }
-  
+  .list-employee {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+   .btn.add {
+    background-color: #007BFF;
+    color: white;
+    max-width: 175px;
+    margin-left: 10px;
+    margin-top: 10px;
+    :hover{
+      color: black;
+      background-color: white;
+    }
+  }
+
   .form-group {
     margin-bottom: 15px;
   }
@@ -50,8 +70,9 @@
     cursor: pointer;
     text-align: center;
   }
-  
   .btn:hover {
-    background-color: #218838;
+    background-color: white;
+    color: black;
   }
+  
   

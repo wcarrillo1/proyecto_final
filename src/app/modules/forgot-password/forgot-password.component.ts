@@ -1,10 +1,4 @@
-import {
-    Component,
-    HostBinding,
-    OnDestroy,
-    OnInit,
-    Renderer2
-} from '@angular/core';
+import {Component,HostBinding,OnDestroy,OnInit,Renderer2} from '@angular/core';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {AppService} from '@services/app.service';
@@ -38,7 +32,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     forgotPassword() {
         if (this.forgotPasswordForm.valid) {
         } else {
-            this.toastr.error('Hello world!', 'Toastr fun!');
+            this.toastr.error('Hola!', 'fun!');
         }
     }
 
@@ -46,6 +40,5 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         this.renderer.removeClass(
             document.querySelector('app-root'),
             'login-page'
-        );
-    }
+        );}
 }

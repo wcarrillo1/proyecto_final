@@ -6,8 +6,8 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">User Profile</li>
+                    <li class="breadcrumb-item"><a href="#">Marcaje</a></li>
+                    <li class="breadcrumb-item active">Perfil</li>
                 </ol>
             </div>
         </div>
@@ -31,13 +31,9 @@
                                 height="100"
                             />
                         </div>
-                        <h3 class="profile-username text-center">
-                            {{ user?.displayName }}
-                        </h3>
-                        <p class="text-muted text-center">Software Engineer</p>
-                        <a href="#" class="btn btn-primary btn-block"
-                            ><b>Follow</b></a
-                        >
+                        <h3 class="profile-username text-center"> {{ user?.displayName }} </h3>
+                        <p class="text-muted text-center">Ingeniero de Software</p>
+                        <a href="#" class="btn btn-primary btn-block" ><b>Seguir</b></a>
                     </div>
                 </div>
             </div>
@@ -46,25 +42,13 @@
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
                             <li class="nav-item">
-                                <pf-button
-                                    class="tab-button"
-                                    [variant]="
-                                        (activeTab$ | async) === 'SETTINGS'
-                                            ? 'primary'
-                                            : 'light'
-                                    "
-                                    (click)="toggle('SETTINGS')"
-                                >
-                                    Settings
-                                </pf-button>
+                                <pf-button class="tab-button" [variant]=" (activeTab$ | async) === 'SETTINGS' ? 'primary' : 'light' " (click)="toggle('SETTINGS')">Configuracion</pf-button>
                             </li>
                         </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content">
-                            <app-settings-tab
-                                *ngIf="(activeTab$ | async) === 'SETTINGS'"
-                            ></app-settings-tab>
+                            <app-settings-tab *ngIf="(activeTab$ | async) === 'SETTINGS'" ></app-settings-tab>
                         </div>
                     </div>
                 </div>

@@ -29,22 +29,24 @@ export class MenuSidebarComponent implements OnInit {
             this.classes = `${BASE_CLASSES} ${state.sidebarSkin}`;
         });
         this.user = this.appService.user;
+
+        const userRole = localStorage.getItem('userRole');
+        if (userRole === 'admin') {
+            this.menu = MENU; 
+          }else if (userRole === 'user') {
+            this.menu = MENU.filter(item => item.name === 'Marcaje');
+          }
     }
 }
 
 export const MENU = [
     {
-        name: 'Tracking',
+        name: 'Marcaje',
         iconClasses: 'fas fa-tachometer-alt',
         path: ['/']
     },
     {
-        name: 'Empleados',
-        iconClasses: 'fas fa-file',
-        path: ['/blank']
-    },
-    {
-        name: 'Opciones',
+        name: 'Administracion',
         iconClasses: 'fas fa-folder',
         children: [
             {
@@ -52,11 +54,16 @@ export const MENU = [
                 iconClasses: 'far fa-address-book',
                 path: ['/reports']
             },
+            {
+                name: 'Empleados',
+                iconClasses: 'fas fa-file',
+                path: ['/employee-list']
+            }
             // {
-            //     name: 'Empleados',
+            //     name: 'Lista de Usuario',
             //     iconClasses: 'fas fa-file',
-            //     path: ['/sub-menu-2']
-            // }
+            //     path: ['/list-users']
+            // },
         ]
     }
 ];

@@ -1,9 +1,9 @@
 <div class="card card-outline card-primary">
     <div class="card-header text-center">
-        <a [routerLink]="['/']" class="h1"><b>Admin</b>LTE</a>
+        <a [routerLink]="['/']" class="h1"><b>Sistema</b>UMG</a>
     </div>
     <div class="card-body">
-        <p class="login-box-msg">Register a new membership</p>
+        <p class="login-box-msg">Registrar nuevo usuario</p>
 
         <form [formGroup]="registerForm" (ngSubmit)="registerByAuth()">
             <div class="input-group mb-3">
@@ -37,7 +37,7 @@
                     formControlName="retypePassword"
                     type="password"
                     class="form-control"
-                    placeholder="Retype password"
+                    placeholder="Repetir password"
                 />
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -54,47 +54,23 @@
                             name="terms"
                             value="agree"
                         />
-                        <label for="agreeTerms">
-                            I agree to the <a href="#">terms</a>
-                        </label>
+                        <label for="agreeTerms">Aceptar los <a href="#">terminos</a></label>
                     </div>
                 </div>
-                <!-- /.col -->
                 <div class="col-5">
-                    <pf-button
-                        [loading]="isAuthLoading"
-                        [disabled]="isFacebookLoading || isGoogleLoading"
-                        (click)="registerByAuth()"
-                    >
-                        Register
-                    </pf-button>
+                    <pf-button [loading]="isAuthLoading" [disabled]="isFacebookLoading || isGoogleLoading" (click)="registerByAuth()">Register</pf-button>
                 </div>
-                <!-- /.col -->
             </div>
         </form>
 
         <div class="social-auth-links text-center">
-            <pf-button
-                class="mb-2"
-                [loading]="isFacebookLoading"
-                [disabled]="true || isAuthLoading || isGoogleLoading"
-            >
-                <i class="fab fa-facebook mr-2"></i>
-                Sign up using Facebook
+            <pf-button class="mb-2" [loading]="isFacebookLoading" [disabled]="true || isAuthLoading || isGoogleLoading" >
+                <i class="fab fa-facebook mr-2"></i>Iniciar sesión con Facebook
             </pf-button>
-            <pf-button
-                [loading]="isGoogleLoading"
-                [disabled]="isAuthLoading || isFacebookLoading"
-                (click)="registerByGoogle()"
-                variant="danger"
-            >
-                <i class="fab fa-google mr-2"></i>
-                Sign up using Google+
+            <pf-button [loading]="isGoogleLoading" [disabled]="isAuthLoading || isFacebookLoading" (click)="registerByGoogle()" variant="danger" >
+                <i class="fab fa-google mr-2"></i> Iniciar sesión con Google
             </pf-button>
         </div>
-
-        <a [routerLink]="['/login']" class="text-center">
-            I already have a membership</a
-        >
+        <a [routerLink]="['/login']" class="text-center">Ya tengo usuario</a>
     </div>
 </div>

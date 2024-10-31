@@ -1,36 +1,106 @@
 <div class="report-list-container">
-    <h2>Reportes de Marcaje</h2>
-    <ul class="report-list">
-      <li class="report-item">
-        <div class="report-title">Marcaje de empleados por departamento</div>
-        <button class="btn-report" (click)="navigateToReport('department')">
-          Ver Reporte
+  <h2>Reportes de Marcaje</h2>
+  <ul class="report-list">
+    <li class="report-item">
+      <div class="report-title">Marcaje de empleados por departamento</div>
+      <div class="btn-container">
+        <button class="btn-report" (click)="openDepartmentModal('preview')" data-tooltip="Vista previa">
+          <i class="fas fa-eye"></i>
         </button>
-      </li>
-      <li class="report-item">
-        <div class="report-title">Marcaje de empleados en general</div>
-        <button class="btn-report" (click)="navigateToReport('general')">
-          Ver Reporte
+        <button class="btn-report" (click)="openDepartmentModal('download')" data-tooltip="Descargar">
+          <i class="fas fa-download"></i>
         </button>
-      </li>
-      <li class="report-item">
-        <div class="report-title">Marcaje de empleado individual</div>
-        <button class="btn-report" (click)="navigateToReport('individual')">
-          Ver Reporte
+      </div>
+    </li>
+
+    <li class="report-item">
+      <div class="report-title">Marcaje de empleados en general</div>
+      <div class="btn-container">
+        <button class="btn-report" (click)="previewReport('general')" data-tooltip="Vista previa">
+          <i class="fas fa-eye"></i>
         </button>
-      </li>
-      <li class="report-item">
-        <div class="report-title">Empleados que marcaron fuera del horario</div>
-        <button class="btn-report" (click)="navigateToReport('overtime')">
-          Ver Reporte
+        <button class="btn-report" (click)="downloadReport('general')" data-tooltip="Descargar">
+          <i class="fas fa-download"></i>
         </button>
-      </li>
-      <li class="report-item">
-        <div class="report-title">Empleados que marcaron antes del horario de salida</div>
-        <button class="btn-report" (click)="navigateToReport('early-checkout')">
-          Ver Reporte
+      </div>
+    </li>
+
+    <li class="report-item">
+      <div class="report-title">Marcaje de empleado individual</div>
+      <div class="btn-container">
+        <button class="btn-report" (click)="openEmployeeModal('preview')" data-tooltip="Vista previa">
+          <i class="fas fa-eye"></i>
         </button>
-      </li>
-    </ul>
+        <button class="btn-report" (click)="openEmployeeModal('download')" data-tooltip="Descargar">
+          <i class="fas fa-download"></i>
+        </button>
+      </div>
+    </li>
+
+    <li class="report-item">
+      <div class="report-title">Empleados que marcaron fuera del horario</div>
+      <div class="btn-container">
+        <button class="btn-report" (click)="previewReport('overtime')" data-tooltip="Vista previa">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button class="btn-report" (click)="downloadReport('overtime')" data-tooltip="Descargar">
+          <i class="fas fa-download"></i>
+        </button>
+      </div>
+    </li>
+
+    <li class="report-item">
+      <div class="report-title">Empleados que marcaron antes del horario de salida</div>
+      <div class="btn-container">
+        <button class="btn-report" (click)="previewReport('early-checkout')" data-tooltip="Vista previa">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button class="btn-report" (click)="downloadReport('early-checkout')" data-tooltip="Descargar">
+          <i class="fas fa-download"></i>
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="modal" *ngIf="isModalOpen" (click)="onModalClick($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <iframe [src]="reportUrl" width="90%" height="400px"></iframe>
   </div>
-  
+</div>
+
+<div *ngIf="isDepartmentModalOpen" class="modal" >
+  <div class="modal-content">
+    <h3>Selecciona un Departamento</h3>
+    <select [(ngModel)]="selectedDepartmentId">
+      <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+    </select>
+    <button (click)="confirmDepartmentAction()">
+      {{ isDownloadAction ? 'Descargar' : 'Mostrar Reporte' }}
+    </button>
+    <button (click)="closeDepartmentModal()">Cancelar</button>
+  </div>
+</div>
+
+<div class="modal" *ngIf="isModalOpen" (click)="onModalClick($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <iframe [src]="reportUrl" width="90%" height="400px"></iframe>
+  </div>
+</div>
+
+<div class="modal" *ngIf="isEmployeeModalOpen" (click)="onModalClick($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeEmployeeModal()">&times;</span>
+    <h3>Selecciona un empleado</h3>
+    <label for="selectedEmployeeId">Empleado:</label>
+    <select [(ngModel)]="selectedEmployeeId" id="selectedEmployeeId">
+      <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+    </select>
+    <button (click)="confirmEmployeeAction()">
+      {{ isDownloadAction ? 'Descargar Reporte' : 'Mostrar Reporte' }}
+    </button>
+    <button (click)="closeEmployeeModal()">Cancelar</button>
+  </div>
+</div>

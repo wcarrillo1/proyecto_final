@@ -43,4 +43,15 @@ export class EmpleadoService  {
   addEmpleado(employee: any): void {
     this.empleados.push(employee);
   }
+
+  getEmployeeById(id: number): Employee | undefined {
+    return this.empleados.find(emp => emp.id === id);
+  }
+
+  updateEmployee(id: number, updatedEmployee: Partial<Employee>): void {
+    const index = this.empleados.findIndex(emp => emp.id === id);
+    if (index !== -1) {
+      this.empleados[index] = { ...this.empleados[index], ...updatedEmployee };
+    }
+  }
 }

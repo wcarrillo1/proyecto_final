@@ -1,1 +1,23 @@
-<p>employee-form works!</p>
+<form (ngSubmit)="saveEmployee()">
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input id="nombre" [(ngModel)]="employee.username" name="nombre" required />
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" [(ngModel)]="employee.email" name="email" type="email" required />
+    </div>
+    <div>
+      <label for="contrasena">Contraseña:</label>
+      <input id="contrasena"[(ngModel)]="employee.contrasena" name="contrasena" type="password" placeholder="Nueva Contraseña" required />
+    </div>
+    <div>
+      <label for="activo">Activo:</label>
+      <select id="activo" [(ngModel)]="employee.activo" name="activo" required>
+        <option [value]="1">Sí</option>
+        <option [value]="0">No</option>
+      </select>
+    </div>
+    <button type="submit">{{ isEditing ? 'Actualizar' : 'Crear' }} Empleado</button>
+  </form>
+  

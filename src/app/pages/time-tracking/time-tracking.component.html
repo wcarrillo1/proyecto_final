@@ -1,18 +1,17 @@
 <div class="tracking-container">
-    <h2>Tracking para el empleado, {{ username }}</h2>
+    <h2>Tracking para el empleado, {{ getDisplayName() }}</h2>
+    <p>{{ mensajeMarcaje }}</p>
     <div class="time-display">
       <p>Hora actual: {{ currentTime }}</p>
     </div>
     <div class="buttons-container">
-      <!-- <button (click)="iniciarSesion()" [disabled]="sessionId" class="btn btn-primary">Iniciar Sesión</button>
-      <button (click)="finalizarSesion()" [disabled]="!sessionId" class="btn btn-danger">Finalizar Sesión</button> -->
-      <!-- <button (click)="registrarEntrada()" [disabled]="!sessionId" class="btn btn-success">Registrar Entrada</button>
-      <button (click)="registrarSalida()" [disabled]="!sessionId" class="btn btn-warning">Registrar Salida</button> -->
-      <button  [disabled]="!sessionId" class="btn btn-success">Registrar Entrada</button>
-      <button [disabled]="!sessionId" class="btn btn-warning">Registrar Salida</button>
+      <button (click)="registrarEntrada()" [disabled]="!sessionId" class="btn btn-success">Registrar Entrada</button>
+      <button (click)="registrarSalida()" [disabled]="registrarSalidaDisabled" class="btn btn-warning">Registrar Salida</button>
     </div>
   </div>
-  
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    El usuario no tiene Salida Pendiente
+  </div>
   <div *ngIf="sesionInfo">
     <h3>Detalles de la Sesión Finalizada</h3>
     <table>

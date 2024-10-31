@@ -23,9 +23,9 @@ export class SettingsTabComponent {
 
     onSubmit() {
         if (this.settingsForm.valid) {
-            console.log('Form submitted:', this.settingsForm.value);
+            console.log('Form:', this.settingsForm.value);
         } else {
-            console.log('Form is not valid');
+            console.log('ForM');
         }
     }
 }

@@ -8,16 +8,12 @@ import {AuthGuard} from '@guards/auth.guard';
 import {NonAuthGuard} from '@guards/non-auth.guard';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
-import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
 import { TimeTrackingComponent } from '@pages/time-tracking/time-tracking.component';
 import { EmployeeListComponent } from '@pages/employee/employee-list/employee-list.component';
 import { ReportAdminComponent } from '@pages/report-admin/report-admin.component';
-import { DepartmentReportComponent } from './reports/department-report/department-report.component';
-import { GeneralReportComponent } from './reports/general-report/general-report.component';
-import { IndividualReportComponent } from './reports/individual-report/individual-report.component';
-import { OvertimeReportComponent } from './reports/overtime-report/overtime-report.component';
-import { EarlyCheckoutReportComponent } from './reports/early-checkout-report/early-checkout-report.component';
 import { AddEmployeeComponent } from '@pages/employee/add-employee/add-employee.component';
+import { EmployeeFormComponent } from '@pages/employee/employee-form/employee-form.component';
+import { ListaUsuariosComponent } from '@pages/list-usuario/lista-usuarios/lista-usuarios.component';
 
 const routes: Routes = [
     {
@@ -31,7 +27,7 @@ const routes: Routes = [
                 component: ProfileComponent
             },
             {
-                path: 'blank',
+                path: 'employee-list',
                 component: EmployeeListComponent
             },
             {
@@ -39,30 +35,18 @@ const routes: Routes = [
                 component: ReportAdminComponent
             },
             {
-                path: 'sub-menu-2',
-                component: EmployeeListComponent
-            },
-            {
                 path: '',
                 component: TimeTrackingComponent
             },
-            { path: 'reports/department', 
-                component: DepartmentReportComponent 
-            },
-            { path: 'reports/general', 
-                component: GeneralReportComponent 
-            },
-            { path: 'reports/individual', 
-                component: IndividualReportComponent 
-            },
-            { path: 'reports/overtime', 
-                component: OvertimeReportComponent 
-            },
-            { path: 'reports/early-checkout', 
-                component: EarlyCheckoutReportComponent 
-            },
             { path: 'add-employee',
                 component: AddEmployeeComponent
+            },
+            { path: 'employees/edit/:id',
+                component: EmployeeFormComponent
+            },
+            {
+                path: 'list-users',
+                component: ListaUsuariosComponent
             },
         ]
     },

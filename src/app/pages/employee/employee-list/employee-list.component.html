@@ -9,7 +9,7 @@
           <th>No.</th>
           <th>Usuario</th>
           <th>Correo</th>
-          <th>Estado</th>
+          <th>Horario</th>
           <th></th>
         </tr>
       </thead>
@@ -18,7 +18,7 @@
           <td>{{ employee.id }}</td>
           <td>{{ employee.username }}</td>
           <td>{{ employee.email }}</td>
-          <td>{{ employee.activo === 1 ? 'Active' : 'Inactive' }}</td>
+          <td>{{ employee.departamento === 1 ? '08:00 - 17:00' : '07:30 - 16:30' }}</td>
           <td class="actions-cell">  
             <div class="actions">
             <button (click)="editEmployee(employee.id)" class="btn edit">Edit</button>

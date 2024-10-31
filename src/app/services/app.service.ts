@@ -4,14 +4,10 @@ import {ToastrService} from 'ngx-toastr';
 import {sleep} from '@/utils/helpers';
 
 import {createUserWithEmailAndPassword} from '@firebase/auth';
-import {
-    User,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    signInWithPopup
-} from 'firebase/auth';
+import {User,onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup} from 'firebase/auth';
 import {GoogleAuthProvider} from 'firebase/auth';
 import {firebaseAuth} from '@/firebase';
+import { AuthService } from './auth.service';
 
 const provider = new GoogleAuthProvider();
 
@@ -23,7 +19,8 @@ export class AppService {
 
     constructor(
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private authService: AuthService
     ) {
         onAuthStateChanged(
             firebaseAuth,
@@ -102,5 +99,6 @@ export class AppService {
         await firebaseAuth.signOut();
         this.user = null;
         this.router.navigate(['/login']);
+        this.authService.logout();
     }
 }

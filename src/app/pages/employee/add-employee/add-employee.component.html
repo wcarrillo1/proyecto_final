@@ -1,3 +1,7 @@
+<div class="main-container">
+<div class="list-employee">
+  <button (click)="goToListEmployee()" class="btn add">Lista de Empleado</button>
+</div>
 <div class="add-employee-container">
     <h2>Agregar Empleado</h2>
     <form (ngSubmit)="addEmployee()">
@@ -14,20 +18,26 @@
         <input type="password" id="contrasena" [(ngModel)]="contrasena" name="contrasena" required>
       </div>
       <div class="form-group">
-        <label for="roles">Rol</label> 
+        <label for="telefono">Telefono</label>
+        <input type="text" id="telefono" [(ngModel)]="telefono" name="telefono">
+      </div>
+      <div class="form-group">
+        <label for="roles">Departamento</label> 
         <select id="roles" [(ngModel)]="role" name="role" required>
-          <option value="USER">Usuario</option>
-          <option value="ADMIN">Administrador</option>
+          <option value=1>IT</option>
+          <option value=2>VENTAS</option>
+          <option value=3>COMPRAS</option>
+          <option value=4>PROYECTOS</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="activo">Activo</label>
+        <label for="activo">Turno de Horario</label>
         <select id="activo" [(ngModel)]="activo" name="activo" required>
-          <option [value]="true">Sí</option>
-          <option [value]="false">No</option>
+          <option [value]=1>08:00 - 17:00</option>
+          <option [value]=2>07:30 - 16:30</option>
         </select>
       </div>
       <button type="submit" class="btn">Agregar Empleado</button>
     </form>
   </div>
-  
+</div>

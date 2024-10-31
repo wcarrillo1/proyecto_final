@@ -4,5 +4,8 @@ export interface Employee {
   email: string;
   contrasena: string;
   activo: number;
+  telefono: number;
+  departamento: number;
+  horario: number;
   username?: string; 
 }

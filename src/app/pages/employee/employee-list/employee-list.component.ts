@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpleadoService } from '../employee.service';
 import { Router } from '@angular/router';
+import { Employee } from '../employee.model';
 
 @Component({
   selector: 'app-employee-list',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './employee-list.component.scss'
 })
 export class EmployeeListComponent implements OnInit {
-  empleados: any[] = [];
+  empleados: Employee[] = [];
 
   constructor (
     private empleadoService: EmpleadoService, 

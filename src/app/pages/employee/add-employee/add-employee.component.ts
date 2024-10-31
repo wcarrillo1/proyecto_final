@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { EmpleadoService } from '../employee.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-employee',
@@ -10,12 +11,16 @@ export class AddEmployeeComponent {
   username: string = '';
   email: string = '';
   contrasena: string = '';
+  telefono: number = null;
+  idDepartamento: number = null;
+  idHorario: number = null;
   activo: boolean = true;
   role: string = 'USER';
 
   empleados: any[] = [];
   // constructor(private empleadoService: EmpleadoService) {}
-  constructor(private empleadoService: EmpleadoService) {}
+  constructor(private empleadoService: EmpleadoService,
+    private router: Router ) {}
   
   addEmployee(): void {
     const newEmployee = {
@@ -23,6 +28,9 @@ export class AddEmployeeComponent {
       username: this.username,
       email: this.email,
       contrasena: this.contrasena,
+      telefono: this.telefono,
+      departamento: this.idDepartamento,
+      horario: this.idHorario,
       activo: this.activo,
       roles: [this.role] 
     };
@@ -30,7 +38,7 @@ export class AddEmployeeComponent {
     this.empleadoService.addEmpleado(newEmployee);
     console.log('Empleado agregado en memoria:', newEmployee);
   
-    alert('Empleado agregado en memoria');
+    alert('Empleado Agregado Exitosamente');
     this.resetForm();
 
     /*
@@ -53,7 +61,13 @@ export class AddEmployeeComponent {
     this.username = '';
     this.email = '';
     this.contrasena = '';
+    this.telefono = null;
+    this.idDepartamento = null;
+    this.idHorario = null,
     this.activo = true;
     this.role = 'USER';
+  }
+  goToListEmployee() {
+    this.router.navigate(['/employee-list']); 
   }
 }

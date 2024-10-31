@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-// import { TimeTrackingService } from '../services/time-tracking.service';
 import { ActivatedRoute } from '@angular/router';
+import { AppService } from '@services/app.service';
+import { MarcajeService } from '@services/marcaje.service';
 import { interval } from 'rxjs';
 
 @Component({
@@ -14,17 +15,31 @@ export class TimeTrackingComponent implements OnInit{
   empleadoId: number = 0;
   username: string = '';
   sesionInfo: any;
+  mensajeMarcaje: string = 'Marcación de Entrada';
+  registrarSalidaDisabled: boolean = false; 
+  errorMessage: string = '';
+
+  public user;
 
   constructor(
-    // private trackingService: TimeTrackingService,
+    private appService: AppService,
+    private marcajeService: MarcajeService,
     private route: ActivatedRoute) {
-    const storedUsername = localStorage.getItem('username');
-    this.username = storedUsername ? storedUsername : 'Empleado';
+      const storedUsername = localStorage.getItem('username');
+      this.username = storedUsername ? storedUsername : 'Empleado';
   }
 
   ngOnInit(): void {
+    this.user = this.appService.user;
     const storedSessionId = localStorage.getItem('sessionId');
     this.sessionId = storedSessionId ? parseInt(storedSessionId, 10) : null;
+
+    if (!storedSessionId) {
+      this.sessionId = 12345;  // Valor simulado de sessionId
+      localStorage.setItem('sessionId', this.sessionId.toString());
+    } else {
+      this.sessionId = parseInt(storedSessionId, 10);
+    }
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
@@ -32,66 +47,74 @@ export class TimeTrackingComponent implements OnInit{
         this.empleadoId = parseInt(id, 10);
       }
     });
-
+    
+    const userId = localStorage.getItem('userId');
     interval(1000).subscribe(() => {
       this.currentTime = new Date().toLocaleTimeString();
     });
+
+    setTimeout(() => {
+      this.logout; 
+    }, 30 * 60 * 1000);
+
+    setTimeout(() => {
+      this.errorMessage = ''; 
+    }, 5000);
   }
 
-  iniciarSesion(): void {
-    if (!this.empleadoId) {
-      console.error('El empleadoId es inválido.');
-      return;
+  getDisplayName() {
+    if (this.user?.displayName) {
+      return this.user.displayName;
+    } else {
+      return localStorage.getItem('username') || 'Usuario desconocido';
     }
-
-    // this.trackingService.iniciarSesion(this.empleadoId).subscribe({
-    //   next: (response) => {
-    //     if (typeof response === 'number') {
-    //       this.sessionId = response;
-    //       localStorage.setItem('sessionId', response.toString());
-    //       console.log('Sesión iniciada, id:', this.sessionId);
-    //     } else {
-    //       console.error('Respuesta inválida del servidor:', response);
-    //     }
-    //   },
-    //   error: (err) => {
-    //     console.error('Error al iniciar la sesión:', err);
-    //   }
-    // });
   }
 
-  finalizarSesion(): void {
-    if (!this.sessionId) {
-      console.error('El sessionId es inválido.');
-      return;
+  logout() {
+    this.appService.logout();
+  }
+
+  registrarEntrada(): void {
+    const userId = localStorage.getItem('empleadoId');
+    if (userId) {
+      this.marcajeService.registrarEntrada(userId).subscribe({
+        next: (response) => {
+          console.log('Entrada registrada:', response);
+          this.registrarSalidaDisabled = false;
+          this.errorMessage = '';
+        },
+        error: (error) => {
+          console.error('Error al registrar entrada:', error);
+        }
+      });
+    }else {
+      console.error('No hay usuario logueado.');
     }
+  }
+
   
-    // this.trackingService.finalizarSesion(this.sessionId).subscribe({
-    //   next: (response) => {
-    //     this.sesionInfo = response;
-    //     this.sessionId = null;
-    //     localStorage.removeItem('sessionId');
-    //     console.log('Sesión finalizada:', this.sesionInfo);
-    //   },
-    //   error: (err) => {
-    //     console.error('Error al finalizar la sesión:', err);
-    //   }
-    // });
+registrarSalida(): void {
+  const userId = localStorage.getItem('empleadoId');
+  if (userId) {
+    this.marcajeService.registrarSalida(userId).subscribe({
+      next: (response) => {
+        console.log('Salida registrada:', response);
+      },
+      error: (error) => {
+        console.error('Error al registrar salida:', error);
+        if (error.status === 400 && error.error === 'El usuario no tiene una entrada sin salida') {
+          this.errorMessage = 'El usuario no tiene una entrada sin salida'; 
+          this.registrarSalidaDisabled = true; 
+          setTimeout(() => {
+            this.errorMessage = ''; 
+          }, 5000);
+        } else {
+          console.error('Error al registrar salida:', error);
+        }
+      }
+    });
+  }else {
+    console.error('No hay usuario logueado.');
   }
-
-  // registrarEntrada(): void {
-  //   if (this.empleadoId) {
-  //     this.trackingService.registrarMarcaje(this.empleadoId, 'ENTRADA').subscribe((response) => {
-  //       console.log('Entrada registrada con ID:', response.id);
-  //     });
-  //   }
-  // }
-
-  // registrarSalida(): void {
-  //   if (this.empleadoId) {
-  //     this.trackingService.registrarMarcaje(this.empleadoId, 'SALIDA').subscribe((response) => {
-  //       console.log('Salida registrada con ID:', response.id);
-  //     });
-  //   }
-  // }
+}
 }

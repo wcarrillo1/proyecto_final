@@ -39,7 +39,6 @@ import { EmployeeListComponent } from './pages/employee/employee-list/employee-l
 import { ReportAdminComponent } from '@pages/report-admin/report-admin.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { ListaUsuariosComponent } from '@pages/list-usuario/lista-usuarios/lista-usuarios.component';
 import { RouterModule } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthInterceptor } from '@modules/login/http/authinterceptor.service';
@@ -71,8 +70,7 @@ registerLocaleData(localeEn, 'en-EN');
         EmployeeFormComponent,
         EmployeeFormComponent,
         EmployeeListComponent,
-        ReportAdminComponent, 
-        ListaUsuariosComponent ],
+        ReportAdminComponent],
     bootstrap: [AppComponent],
     imports: [
         FormsModule,

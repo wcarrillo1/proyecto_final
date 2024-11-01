@@ -1,11 +1,13 @@
 export interface Employee {
-  id: number;
+  idUsuario: number;
   nombre: string;
   email: string;
-  contrasena: string;
-  activo: number;
-  telefono: number;
-  departamento: number;
-  horario: number;
-  username?: string; 
+  password: string;
+  enabled: boolean;
+  username: string;
+  telefono?: string | null; 
+  idDepartamento?: number | null;
+  idHorario?: number | null;
+  idRol: number[]; 
+  apellido: string; 
 }

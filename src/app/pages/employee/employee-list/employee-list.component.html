@@ -7,7 +7,7 @@
       <thead>
         <tr>
           <th>No.</th>
-          <th>Usuario</th>
+          <th>Nombre</th>
           <th>Correo</th>
           <th>Horario</th>
           <th></th>
@@ -15,13 +15,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let employee of empleados">
-          <td>{{ employee.id }}</td>
-          <td>{{ employee.username }}</td>
+          <td>{{ employee.idUsuario }}</td>
+          <td>{{ employee.nombre }}</td>
           <td>{{ employee.email }}</td>
-          <td>{{ employee.departamento === 1 ? '08:00 - 17:00' : '07:30 - 16:30' }}</td>
+          <td>{{ employee.idHorario === 1 ? '08:00 - 17:00' : '07:30 - 16:30' }}</td>
           <td class="actions-cell">  
             <div class="actions">
-            <button (click)="editEmployee(employee.id)" class="btn edit">Edit</button>
+            <button (click)="editEmployee(employee.idUsuario)" class="btn edit">Edit</button>
             <!-- <button (click)="marcarTracking(employee.id)" class="btn tracking">Marcar Tracking</button> -->
           </div>
           </td>

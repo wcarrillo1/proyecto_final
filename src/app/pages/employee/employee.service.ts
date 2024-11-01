@@ -2,56 +2,43 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Employee } from './employee.model';
+import { environment } from 'environments/environment';
 // import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadoService  {
-  // private baseUrl  = `${environment.apiUrl}/api`;
-  private baseUrl  = `/api`;
-  private empleados: any[] = [];
+  private baseUrl  = `${environment.apiUrl}/api`;
+  private empleados: Employee[] = [];
+
   constructor(private http: HttpClient) {}
 
-  // getEmpleados(): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/empleados`).pipe(
-  //     tap((data) => console.log('Datos de empleados:', data)) 
-  //   );
-  // }
-
-  // getEmployeeById(id: number): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/empleados/${id}`);
-  // }
-
-  // addEmployee(employee: any): Observable<HttpResponse<any>> {
-  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  //   return this.http.post<any>(`${this.baseUrl}/createEmployee`, employee, { headers, observe: 'response' });
-  // }
-
-  // updateEmployee(id: number, employeeData: Partial<Employee>): Observable<void> {
-  //   return this.http.put<void>(`${this.baseUrl}/empleados/${id}`, employeeData);
-  // }
-
-  // updateEmployeeStatus(id: number, status: number): Observable<void> {
-  //   return this.http.put<void>(`${this.baseUrl}/empleados/estado/${id}/${status}`, {});
-  // }
-
-  getEmpleados(): any[] {
-    return this.empleados;
+  getEmpleados(): Observable<Employee[]> { // Cambiar el retorno a Observable<Employee[]>
+    return this.http.get<Employee[]>(`${this.baseUrl}/usuarios`).pipe(
+      tap((data) => {
+        this.empleados = data; // Almacenar los empleados en la variable
+        console.log('Datos de empleados:', data);
+      })
+    );
   }
 
-  addEmpleado(employee: any): void {
-    this.empleados.push(employee);
+  getEmployeeById(id: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.baseUrl}/usuarios/${id}`);
   }
 
-  getEmployeeById(id: number): Employee | undefined {
-    return this.empleados.find(emp => emp.id === id);
+  addEmpleado(newEmployee: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/usuarios/nuevo`, newEmployee);
   }
 
-  updateEmployee(id: number, updatedEmployee: Partial<Employee>): void {
-    const index = this.empleados.findIndex(emp => emp.id === id);
-    if (index !== -1) {
-      this.empleados[index] = { ...this.empleados[index], ...updatedEmployee };
-    }
+  updateEmployee(url: string, employee: any): Observable<any> { // Cambiar a tipo 'any'
+    console.log('URL de actualización:', url);
+    console.log('JSON enviado:', JSON.stringify(employee, null, 2));
+    return this.http.put(url, employee);
   }
+
+  updateEmployeeStatus(id: number, status: number): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/empleados/estado/${id}/${status}`, {});
+  }
+
 }

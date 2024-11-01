@@ -40,18 +40,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
         });
     }
 
-    async registerByAuth() {
-        if (this.registerForm.valid) {
+    async registerByAuth(username?: string, password?: string) {
+        const email = username || this.registerForm.value.email;
+        const pass = password || this.registerForm.value.password;
+
+        if (this.registerForm.valid || (username && password)) {
             this.isAuthLoading = true;
-            await this.appService.registerWithEmail(
-                this.registerForm.value.email,
-                this.registerForm.value.password
-            );
+        try {
+            // Asegúrate de que registerWithEmail acepte username
+            await this.appService.registerWithEmail(email, pass);
+            this.toastr.success('Usuario registrado con éxito');
+        } catch (error) {
+            this.toastr.error('Error al registrar el usuario.');
+        } finally {
             this.isAuthLoading = false;
-        } else {
-            this.toastr.error('Form is not valid!');
         }
+    } else {
+        this.toastr.error('El formulario no es válido!');
     }
+}
 
     async registerByGoogle() {
         this.isGoogleLoading = true;

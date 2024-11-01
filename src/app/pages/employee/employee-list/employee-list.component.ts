@@ -16,37 +16,27 @@ export class EmployeeListComponent implements OnInit {
     private router: Router )
   {}
 
-  // ngOnInit(): void {
-  //   this.obtenerEmpleados();
-  // }
   ngOnInit() {
-    this.empleados = this.empleadoService.getEmpleados();
+    this.obtenerEmpleados();
   }
 
-  // obtenerEmpleados(): void {
-  //   this.empleadoService.getEmpleados().subscribe(
-  //     (data) => {
-  //       console.log('Empleados obtenidos:', data);
-  //       this.empleados = data;
-  //     },
-  //     (error) => {
-  //       console.error('Error al obtener empleados:', error);
-  //     }
-  //   );
-  // }
+  obtenerEmpleados(): void {
+    this.empleadoService.getEmpleados().subscribe(
+      (data) => {
+        this.empleados = data;
+        console.log('Empleados obtenidos:', this.empleados);
+      },
+      (error) => {
+        console.error('Error al obtener empleados:', error);
+      }
+    );
+  }
 
   editEmployee(id: number | undefined): void {
     if (id !== undefined) {
       this.router.navigate(['/employees/edit', id]);
     }
   }
-
-  // marcarTracking(id: number | undefined): void {
-  //   if (id !== undefined) {
-  //     localStorage.setItem('empleadoId', id.toString());
-  //     this.router.navigate(['/time-tracking', id]);
-  //   }  
-  // }
 
   goToAddEmployee() {
     this.router.navigate(['/add-employee']); 

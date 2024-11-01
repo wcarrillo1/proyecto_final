@@ -30,17 +30,8 @@ export class TimeTrackingComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.user = this.appService.user;
     const storedSessionId = localStorage.getItem('sessionId');
-    this.sessionId = storedSessionId ? parseInt(storedSessionId, 10) : null;
-
-    if (!storedSessionId) {
-      this.sessionId = 12345;  // Valor simulado de sessionId
-      localStorage.setItem('sessionId', this.sessionId.toString());
-    } else {
-      this.sessionId = parseInt(storedSessionId, 10);
-    }
-
+    this.user = this.appService.user;
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -48,7 +39,13 @@ export class TimeTrackingComponent implements OnInit{
       }
     });
     
-    const userId = localStorage.getItem('userId');
+    if (storedSessionId) {
+      this.sessionId = parseInt(storedSessionId, 10);
+      console.log('Session ID recuperado:', this.sessionId);
+    } else {
+      this.sessionId = null; 
+    }
+    
     interval(1000).subscribe(() => {
       this.currentTime = new Date().toLocaleTimeString();
     });
@@ -79,9 +76,13 @@ export class TimeTrackingComponent implements OnInit{
     if (userId) {
       this.marcajeService.registrarEntrada(userId).subscribe({
         next: (response) => {
+          const idMarcaje = response.idMarcaje;
+          localStorage.setItem('sessionId', idMarcaje.toString());
+          this.sessionId = idMarcaje;
           console.log('Entrada registrada:', response);
           this.registrarSalidaDisabled = false;
           this.errorMessage = '';
+          console.log('Marcaje registrado correctamente. ID:', idMarcaje);
         },
         error: (error) => {
           console.error('Error al registrar entrada:', error);
@@ -91,7 +92,6 @@ export class TimeTrackingComponent implements OnInit{
       console.error('No hay usuario logueado.');
     }
   }
-
   
 registrarSalida(): void {
   const userId = localStorage.getItem('empleadoId');

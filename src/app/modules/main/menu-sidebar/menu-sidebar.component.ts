@@ -1,6 +1,6 @@
 import {AppState} from '@/store/state';
 import {UiState} from '@/store/ui/state';
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, DoCheck, HostBinding, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AppService} from '@services/app.service';
 import {User} from 'firebase/auth';
@@ -12,7 +12,7 @@ const BASE_CLASSES = 'main-sidebar elevation-4';
     templateUrl: './menu-sidebar.component.html',
     styleUrls: ['./menu-sidebar.component.scss']
 })
-export class MenuSidebarComponent implements OnInit {
+export class MenuSidebarComponent implements OnInit, DoCheck {
     @HostBinding('class') classes: string = BASE_CLASSES;
     public ui: Observable<UiState>;
     public user?: User;
@@ -30,12 +30,21 @@ export class MenuSidebarComponent implements OnInit {
         });
         this.user = this.appService.user;
 
+        this.user = this.appService.user;
+        this.updateMenu(); 
+    }
+
+    ngDoCheck() {
+        this.updateMenu();
+    }
+
+    updateMenu() {
         const userRole = localStorage.getItem('userRole');
         if (userRole === 'admin') {
-            this.menu = MENU; 
-          }else if (userRole === 'user') {
-            this.menu = MENU.filter(item => item.name === 'Marcaje');
-          }
+          this.menu = MENU;
+        } else if (userRole === 'user') {
+          this.menu = MENU.filter(item => item.name === 'Marcaje');
+        }
     }
 }
 

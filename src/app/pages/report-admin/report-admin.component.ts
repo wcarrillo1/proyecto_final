@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ReportService } from '@services/report.service';
 import { environment } from 'environments/environment';
+import { EmpleadoService } from '@pages/employee/employee.service';
 
 @Component({
   selector: 'app-report-admin',
   templateUrl: './report-admin.component.html',
   styleUrl: './report-admin.component.scss'
 })
-export class ReportAdminComponent {
+export class ReportAdminComponent implements OnInit {
   private baseUrl= environment.apiReports; 
   isModalOpen = false;
   reportUrl: SafeResourceUrl | null = null;
@@ -17,20 +18,38 @@ export class ReportAdminComponent {
   employeeId: number;
   selectedEmployeeId: number;
   departments = [
-    { id: 1, name: 'Recursos Humanos' }, 
-    { id: 2, name: 'Tecnología' },
-    { id: 3, name: 'Ventas' }
+    { id: 1, name: 'IT' }, 
+    { id: 2, name: 'Ventas' },
+    { id: 3, name: 'Compras' },
+    { id: 4, name: 'Proyectos' }
   ];
-  employees = [
-    { id: 1, name: 'Juan Pérez' },
-    { id: 2, name: 'Ana López' },
-    { id: 3, name: 'Carlos García' }
-  ];
+  employees: any[] = []; 
   isDepartmentModalOpen = false;
   isEmployeeModalOpen = false;
   isDownloadAction = false;
 
-  constructor(private reportService: ReportService,private sanitizer: DomSanitizer) {}
+  constructor(
+    private reportService: ReportService,
+    private sanitizer: DomSanitizer,
+    private empleado: EmpleadoService) {}
+
+  ngOnInit(): void {
+    this.loadEmployees(); 
+  }
+  
+  loadEmployees() {
+    this.empleado.getEmpleados().subscribe(
+      (data: any[]) => {
+        this.employees = data.map(emp => ({
+          id: emp.idUsuario,
+          name: `${emp.nombre} ${emp.apellido}`
+        }));
+      },
+      error => {
+        console.error('Error loading employees:', error);
+      }
+    );
+  }
 
   downloadReport(reportType: string) {
     const reportEndpoint = this.getReportEndpoint(reportType, true); // Pass `true` for downloading

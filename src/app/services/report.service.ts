@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class ReportService {
   private apiUrl = environment.apiReports;
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -28,15 +29,15 @@ export class ReportService {
   }
 
   getDepartmentReport(requestBody: any, download: boolean) {
-    const url = `${this.apiUrl}/reportes/departamento`; // URL del endpoint
+    const url = `${this.apiUrl}/reportes/departamento`; 
     console.log('Preview Report URL:', url, requestBody);
-    return this.http.post(url, requestBody, { responseType: 'blob' }); // Enviar el cuerpo como JSON
+    return this.http.post(url, requestBody, { responseType: 'blob' }); 
   }
 
   downloadDepartmentReport(requestBody: any) {
-    const url = `${this.apiUrl}/reportes/departamento?descarga=true`; // Agregar parámetro para descargar
+    const url = `${this.apiUrl}/reportes/departamento?descarga=true`;
     console.log('Preview Report URL:', url, requestBody);
-    return this.http.post(url, requestBody, { responseType: 'blob' }); // Enviar el cuerpo como JSON
+    return this.http.post(url, requestBody, { responseType: 'blob' }); 
   }
 
 //   getIndividualReport(requestBody: any, download: boolean): Observable<Blob> {
@@ -56,5 +57,14 @@ getIndividualReport(requestBody: any, download: boolean) {
   const url = `${this.apiUrl}/reportes/individual`;
   console.log('Preview Report URL:', url, requestBody);
   return this.http.post(url, requestBody, { responseType: 'blob' });
+}
+
+getEmployees(): Observable<any[]> {
+  const token = localStorage.getItem('auth-token');
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}` // Ajusta el formato según sea necesario
+  });
+
+  return this.http.get<any[]>(`${this.baseUrl}/api/usuarios`,{ headers });
 }
 }

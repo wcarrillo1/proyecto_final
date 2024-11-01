@@ -13,7 +13,6 @@ import { EmployeeListComponent } from '@pages/employee/employee-list/employee-li
 import { ReportAdminComponent } from '@pages/report-admin/report-admin.component';
 import { AddEmployeeComponent } from '@pages/employee/add-employee/add-employee.component';
 import { EmployeeFormComponent } from '@pages/employee/employee-form/employee-form.component';
-import { ListaUsuariosComponent } from '@pages/list-usuario/lista-usuarios/lista-usuarios.component';
 
 const routes: Routes = [
     {
@@ -43,10 +42,6 @@ const routes: Routes = [
             },
             { path: 'employees/edit/:id',
                 component: EmployeeFormComponent
-            },
-            {
-                path: 'list-users',
-                component: ListaUsuariosComponent
             },
         ]
     },

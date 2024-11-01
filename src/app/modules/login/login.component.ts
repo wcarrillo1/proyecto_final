@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     login(): void {
-        console.log('Datos enviados:', { email: this.loginForm.value.email, contrasena: this.loginForm.value.password });
+        console.log('Datos enviados:', { username: this.loginForm.value.email, password: this.loginForm.value.password });
         this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(
           response => {
             console.log('Login response:', response);

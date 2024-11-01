@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee.model';
 import { EmpleadoService } from '../employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-employee-form',
@@ -9,20 +10,21 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './employee-form.component.scss'
 })
 export class EmployeeFormComponent implements OnInit{
+  private baseUrlUpdate  = `${environment.apiUrl}/api`;
   employee: Employee = {
-    id: 0,
+    idUsuario: 0,
     nombre: '',
     email: '',
-    contrasena: '',
-    activo: 1,
+    password: '',
+    enabled: true,
     username: '',
     telefono: null,
-    departamento: null,
-    horario: null,
+    idDepartamento: null,
+    idHorario: null,
+    idRol: [], 
+    apellido: ''
   };
   isEditing = false;
-
-  empleadosEnMemoria: Employee[] = [];
 
   constructor(
     private employeeService: EmpleadoService,
@@ -34,45 +36,77 @@ export class EmployeeFormComponent implements OnInit{
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditing = true;
-      const empleadoExistente = this.employeeService.getEmployeeById(+id);
-      // this.employeeService.getEmployeeById(+id).subscribe(data => {
-      //   this.employee = data;
-      // });
-      if (empleadoExistente) {
-        this.employee = { ...empleadoExistente };
+      this.employeeService.getEmployeeById(+id).subscribe(
+        (empleadoExistente: Employee) => {
+        if (empleadoExistente) {
+          this.employee = {
+            ...empleadoExistente,
+            idRol: empleadoExistente.idRol || [], 
+            apellido: empleadoExistente.apellido || ''
+          };
+        }
+      },
+      (error) => {
+        console.error('Error al obtener empleado:', error);
       }
+    );
     }
   }
+  
   saveEmployee(): void {
-    // const updatedEmployee = {
-    //   email: this.employee.email,
-    //   username: this.employee.username,
-    //   contrasena: this.employee.contrasena
-    // };
+    const departamentoId = this.employee.idDepartamento; // Asumiendo que lo has obtenido del formulario
+    const horarioId = this.employee.idHorario; // Lo mismo para el horario
+    const rolesIds = this.employee.idRol.join(',');
+
+    const url = `${this.baseUrlUpdate}/usuarios/${this.employee.idUsuario}?idDepartamento=${departamentoId}&idHorario=${horarioId}&idsRoles=${rolesIds}`;
+
+    const body = {
+      username: this.employee.username,
+      password: this.employee.password,
+      nombre: this.employee.nombre,
+      apellido: this.employee.apellido,
+      email: this.employee.email,
+      telefono: this.employee.telefono,
+      enabled: 1,
+      departamento: {
+        idDepartamento: Number(this.employee.idDepartamento),
+        nombreDepartamento: "IT"
+      },
+      horario: {
+        idHorario: Number(this.employee.idHorario),
+        horaEntrada: "08:00", 
+        horaSalida: "17:00",
+        toleranciaEntrada: 10,
+        toleranciaSalida: 10
+      },
+      roles:  [
+        {
+          id: 1,
+          nombreRol: "Empleado"
+        }
+      ]
+    };
+    
     if (this.isEditing) {
-      // this.employeeService.updateEmployee(this.employee.id, updatedEmployee).subscribe(() => {
-      //   this.employeeService.updateEmployeeStatus(this.employee.id, this.employee.activo).subscribe(() => {
-      //   alert('Empleado actualizado con éxito');
-      //   this.router.navigate(['/employees']);
-      // });
-      // });
-      // const index = this.empleadosEnMemoria.findIndex(emp => emp.id === this.employee.id);
-      // if (index !== -1) {
-      //   this.empleadosEnMemoria[index] = { ...this.employee };
-      //   alert('Empleado actualizado en memoria');
-      // }
-      this.employeeService.updateEmployee(this.employee.id, this.employee);
-      alert('Empleado actualizado en memoria');
+      this.employeeService.updateEmployee(url, body).subscribe(
+        () => {
+          alert('Empleado actualizado exitosamente');
+          this.router.navigate(['/employee-list']);
+        },
+        (error) => {
+          console.error('Error al actualizar empleado:', error);
+        }
+      );
     } else {
-      // this.employeeService.addEmployee(updatedEmployee).subscribe(() => {
-      //   this.router.navigate(['/employees']);
-      // });
-      // this.employee.id = this.empleadosEnMemoria.length + 1; // Asignar un ID simple para memoria
-      // this.empleadosEnMemoria.push({ ...this.employee });
-      // alert('Empleado agregado en memoria');
-      // this.employeeService.addEmployee(this.employee);
-      alert('Empleado Agregado Exitosamente');
+      this.employeeService.addEmpleado(body).subscribe(
+        () => {
+          alert('Empleado agregado exitosamente');
+          this.router.navigate(['/employee-list']);
+        },
+        (error) => {
+          console.error('Error al agregar empleado:', error);
+        }
+      );
     }
-    this.router.navigate(['/employee-list']);
   }
 }

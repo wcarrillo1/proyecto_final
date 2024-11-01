@@ -7,11 +7,15 @@
     <form (ngSubmit)="addEmployee()">
       <div class="form-group">
         <label for="nombre">Nombre del Usuario</label>
-        <input type="text" id="nombre" [(ngModel)]="username" name="username" required>
+        <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" required>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" [(ngModel)]="email" name="email" required>
+        <label for="apellido">Apellido del Usuario</label>
+        <input type="text" id="apellido" [(ngModel)]="apellido" name="apellido" required>
+      </div>
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input type="email" id="email" [(ngModel)]="username" name="Username" required>
       </div>
       <div class="form-group">
         <label for="contrasena">Contraseña</label>
@@ -22,8 +26,8 @@
         <input type="text" id="telefono" [(ngModel)]="telefono" name="telefono">
       </div>
       <div class="form-group">
-        <label for="roles">Departamento</label> 
-        <select id="roles" [(ngModel)]="role" name="role" required>
+        <label for="departamento">Departamento</label> 
+        <select id="departamento" [(ngModel)]="idDepartamento" name="idDepartamento" required>
           <option value=1>IT</option>
           <option value=2>VENTAS</option>
           <option value=3>COMPRAS</option>
@@ -31,8 +35,8 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="activo">Turno de Horario</label>
-        <select id="activo" [(ngModel)]="activo" name="activo" required>
+        <label for="horario">Turno de Horario</label>
+        <select id="horario" [(ngModel)]="idHorario" name="idHorario" required>
           <option [value]=1>08:00 - 17:00</option>
           <option [value]=2>07:30 - 16:30</option>
         </select>

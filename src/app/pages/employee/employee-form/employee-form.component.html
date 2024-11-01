@@ -1,23 +1,43 @@
 <form (ngSubmit)="saveEmployee()">
     <div>
       <label for="nombre">Nombre:</label>
-      <input id="nombre" [(ngModel)]="employee.username" name="nombre" required />
+      <input id="nombre" [(ngModel)]="employee.nombre" name="nombre" required />
+    </div>
+    <div>
+      <label for="apellido">Apellido:</label>
+      <input id="apellido"[(ngModel)]="employee.apellido" name="apellido" >
     </div>
     <div>
       <label for="email">Email:</label>
-      <input id="email" [(ngModel)]="employee.email" name="email" type="email" required />
+      <input id="email" [(ngModel)]="employee.email" name="email" type="email" disabled />
     </div>
     <div>
-      <label for="contrasena">Contraseña:</label>
-      <input id="contrasena"[(ngModel)]="employee.contrasena" name="contrasena" type="password" placeholder="Nueva Contraseña" required />
+      <label for="telefono">Teléfono:</label>
+      <input id="telefono" [(ngModel)]="employee.telefono" name="telefono" required />
     </div>
     <div>
+      <label for="departamento">Departamento:</label>
+      <select id="departamento" [(ngModel)]="employee.idDepartamento" name="idDepartamento" required>
+        <option value=1>IT</option>
+        <option value=2>VENTAS</option>
+        <option value=3>COMPRAS</option>
+        <option value=4>PROYECTOS</option>
+      </select>
+    </div>
+    <div>
+      <label for="horario">Horario:</label>
+      <select id="horario" [(ngModel)]="employee.idHorario" name="idHorario" required>
+        <option [value]=1>08:00 - 17:00</option>
+        <option [value]=2>07:30 - 16:30</option>
+      </select>
+    </div>
+    <!-- <div>
       <label for="activo">Activo:</label>
-      <select id="activo" [(ngModel)]="employee.activo" name="activo" required>
+      <select id="activo" [(ngModel)]="employee.enabled" name="activo" required>
         <option [value]="1">Sí</option>
         <option [value]="0">No</option>
       </select>
-    </div>
+    </div> -->
     <button type="submit">{{ isEditing ? 'Actualizar' : 'Crear' }} Empleado</button>
   </form>
   

@@ -18,6 +18,7 @@ export class TimeTrackingComponent implements OnInit{
   mensajeMarcaje: string = 'Marcación de Entrada';
   registrarSalidaDisabled: boolean = false; 
   errorMessage: string = '';
+  succesMessage: string = '';
 
   public user;
 
@@ -57,6 +58,10 @@ export class TimeTrackingComponent implements OnInit{
     setTimeout(() => {
       this.errorMessage = ''; 
     }, 5000);
+
+    setTimeout(() => {
+      this.succesMessage = ''; 
+    }, 5000);
   }
 
   getDisplayName() {
@@ -82,6 +87,8 @@ export class TimeTrackingComponent implements OnInit{
           console.log('Entrada registrada:', response);
           this.registrarSalidaDisabled = false;
           this.errorMessage = '';
+          alert('Entrada registrada Correctamente');
+          // this.succesMessage = '';
           console.log('Marcaje registrado correctamente. ID:', idMarcaje);
         },
         error: (error) => {
